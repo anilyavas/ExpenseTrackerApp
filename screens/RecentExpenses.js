@@ -1,5 +1,7 @@
-import { ExpensesOutput } from "../components/ExpensesOutput/ExpensesOutput";
+import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 
-export function RecentExpenses() {
+function RecentExpenses() {
   return <ExpensesOutput expensesPeriod="Last 7 Days" />;
 }
+
+export default RecentExpenses;
