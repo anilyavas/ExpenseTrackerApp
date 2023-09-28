@@ -3,6 +3,7 @@ import { Input } from './Input';
 import { useState } from 'react';
 import { Button } from '../UI/Button';
 import { getFormattedDate } from '../../util/Date';
+import { GlobalStyles } from '../../constants/styles';
 
 export function ExpenseForm({
   defaultValues,
@@ -70,6 +71,7 @@ export function ExpenseForm({
       <Text style={styles.title}>Your Expense</Text>
       <View style={styles.inputsRow}>
         <Input
+          invalid={!inputs.amount.isValid}
           style={styles.rowInput}
           label="Amount"
           textInputConfig={{
@@ -79,6 +81,7 @@ export function ExpenseForm({
           }}
         />
         <Input
+          invalid={!inputs.date.isValid}
           style={styles.rowInput}
           label="Date"
           textInputConfig={{
@@ -90,6 +93,7 @@ export function ExpenseForm({
         />
       </View>
       <Input
+        invalid={!inputs.description.isValid}
         label="Description"
         textInputConfig={{
           multiline: true,
@@ -100,7 +104,9 @@ export function ExpenseForm({
         }}
       />
       {formIsInvalid && (
-        <Text>Invalid input values - please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid input values - please check your entered data!
+        </Text>
       )}
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode={'flat'} onPress={onCancel}>
@@ -139,5 +145,10 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 120,
     marginHorizontal: 8,
+  },
+  errorText: {
+    textAlign: 'center',
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
 });
