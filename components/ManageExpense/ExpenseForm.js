@@ -9,7 +9,7 @@ export function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
     date: '',
     description: '',
   });
-  function inputChangeHandler(inputIdentifier, enteredValue) {
+  function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputValues((curInputValues) => {
       return {
         ...curInputValues,
@@ -35,7 +35,7 @@ export function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
           label="Amount"
           textInputConfig={{
             keyboardType: 'decimal-pad',
-            onChangeText: inputChangeHandler.bind(this, 'amount'),
+            onChangeText: inputChangedHandler.bind(this, 'amount'),
             value: inputValues.amount,
           }}
         />
@@ -44,8 +44,8 @@ export function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
           label="Date"
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
-            maxLenght: 10,
-            onChangeText: inputChangeHandler.bind(this, 'date'),
+            maxLength: 10,
+            onChangeText: inputChangedHandler.bind(this, 'date'),
             value: inputValues.date,
           }}
         />
@@ -54,9 +54,9 @@ export function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
         label="Description"
         textInputConfig={{
           multiline: true,
-          // autoCapitilize: 'none',
-          // autoCorrect: false,
-          onChangeText: inputChangeHandler.bind(this, 'description'),
+          // autoCapitalize: 'none'
+          // autoCorrect: false // default is true
+          onChangeText: inputChangedHandler.bind(this, 'description'),
           value: inputValues.description,
         }}
       />
