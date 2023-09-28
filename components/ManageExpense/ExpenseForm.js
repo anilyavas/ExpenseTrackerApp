@@ -13,16 +13,16 @@ export function ExpenseForm({
   const [inputs, setInputs] = useState({
     amount: {
       value: defaultValues ? defaultValues.amount.toString() : '',
-      isValid: !!defaultValues,
+      isValid: true,
     },
 
     date: {
       value: defaultValues ? getFormattedDate(defaultValues.date) : '',
-      isValid: !!defaultValues,
+      isValid: true,
     },
     description: {
       value: defaultValues ? defaultValues.description : '',
-      isValid: !!defaultValues,
+      isValid: true,
     },
   });
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -35,18 +35,18 @@ export function ExpenseForm({
   }
   function submitHandler() {
     const expenseData = {
-      amount: +inputs.amount,
-      date: new Date(inputs.date),
-      description: inputs.description,
+      amount: +inputs.amount.value,
+      date: new Date(inputs.date.value),
+      description: inputs.description.value,
     };
 
     const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
     const dateIsValid = expenseData.date.toString() === 'Invalid Date';
     const descriptionIsValid = expenseData.description.trim().lenght > 0;
 
-    if (!amountIsValid || dateIsValid || descriptionIsValid) {
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       // Alert.alert('Invalid input', 'Please check your input values');
-      setInputs((curInputValues) => {
+      setInputs((curInputs) => {
         return {
           amount: { value: curInputs.amount.value, isValid: amountIsValid },
           date: { value: curInputs.date.value, isValid: dateIsValid },
@@ -60,6 +60,10 @@ export function ExpenseForm({
     }
     onSubmit(expenseData);
   }
+  const formIsInvalid =
+    !inputs.amount.isValid ||
+    !inputs.date.isValid ||
+    !inputs.description.isValid;
 
   return (
     <View style={styles.form}>
@@ -95,6 +99,9 @@ export function ExpenseForm({
           value: inputs.description,
         }}
       />
+      {formIsInvalid && (
+        <Text>Invalid input values - please check your entered data!</Text>
+      )}
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode={'flat'} onPress={onCancel}>
           Cancel
